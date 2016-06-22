@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ViewPager</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_cash_flow">CashFlow</string>
+    <string name="title_expenses">Expenses</string>
+    <string name="title_incomes">Incomes</string>
+    <string name="item_menu_user_profile_tittle">user profile</string>
+    <string name="hint_item_title">Input title</string>
+    <string name="hint_item_volume">0</string>
+    <string name="isCritical">Is it critical?</string>
+    <string name="isConstant">Is it constant?</string>
+    <string name="dialog_item_title_input_expense">Input new expense:</string>
+    <string name="dialog_item_title_input_income">Input new income:</string>
+    <string name="dialog_item_message">Add new item</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="volume">Volume</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+</resources>
