@@ -1,5 +1,6 @@
 package com.example.vserp.viewpager.dialogs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -68,6 +69,13 @@ public class AddNewItemDialog extends DialogFragment {
         double volume = Double.parseDouble(etVolumeOfItem.getText().toString());
         int constant = chbIsConstant.isChecked() ? 1 : 0;
 
-        MyIntentService.startActionAddNewItem(getActivity(), title, volume, constant);
+        switch (MainActivity.sTabPosition) {
+            case MyPagerAdapter.FRAGMENT_EXPENSES:
+                MyIntentService.startActionAddNewExpense(getActivity(), title, volume, constant);
+                break;
+            case MyPagerAdapter.FRAGMENT_INCOMES:
+                MyIntentService.startActionAddNewIncome(getActivity(), title, volume, constant);
+                break;
+        }
     }
 }

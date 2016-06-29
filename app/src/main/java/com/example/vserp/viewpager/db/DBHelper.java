@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Prefs.FIELD_ID,
             Prefs.CASH_FLOW_MONTHLY_FIELD_MONTH,
             Prefs.CASH_FLOW_MONTHLY_FIELD_YEAR,
-            Prefs.CASH_FLOW_MONTHLY_FIELD_INCOMES,
+            Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME,
             Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE,
             Prefs.CASH_FLOW_MONTHLY_FIELD_CASH_FLOW,
             Prefs.CASH_FLOW_MONTHLY_FIELD_BALANCE,

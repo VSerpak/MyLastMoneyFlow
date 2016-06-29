@@ -58,13 +58,17 @@ public class Prefs {
     public static final String TABLE_CASH_FLOW_MONTHLY_NAME = "cash_flow_monthly";
     public static final String CASH_FLOW_MONTHLY_FIELD_MONTH = "month";
     public static final String CASH_FLOW_MONTHLY_FIELD_YEAR = "year";
-    public static final String CASH_FLOW_MONTHLY_FIELD_INCOMES = "income";
+    public static final String CASH_FLOW_MONTHLY_FIELD_INCOME = "income";
     public static final String CASH_FLOW_MONTHLY_FIELD_EXPENSE = "expense";
     public static final String CASH_FLOW_MONTHLY_FIELD_CASH_FLOW = "month_cash_flow";
     public static final String CASH_FLOW_MONTHLY_FIELD_BALANCE = "balance";
     public static final String CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN = "next_month_income_plan";
     public static final String CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN = "next_month_expense_plan";
 
+    //Last month positions:
+
+    public static final String LAST_MONTH_EXPENSE = "last_month_expense";
+    public static final String LAST_MONTH_INCOME = "last_month_income";
     //The provider constants:
     private static final String URI_SCHEMA = "content://";
     public static final String URI_AUTHORITIES = "com.example.vserp.viewpager.provider";
@@ -85,6 +89,14 @@ public class Prefs {
     public static final String URI_CASH_FLOW_MONTHLY_PATH = "monthly_cash";
     public static final Uri URI_CASH_FLOW_MONTHLY = Uri.parse(URI_SCHEMA + URI_AUTHORITIES + "/" + URI_CASH_FLOW_MONTHLY_PATH);
 
+    //Expenses Plan:
+    public static final String URI_MONTHLY_EXPENSES_PLAN_PATH = "expenses_plan";
+    public static final Uri URI_MONTHLY_EXPENSES_PLAN = Uri.parse(URI_SCHEMA + URI_AUTHORITIES + "/" + URI_MONTHLY_EXPENSES_PLAN_PATH);
+
+    //Incomes Plan:
+    public static final String URI_MONTHLY_INCOMES_PLAN_PATH = "incomes_plan";
+    public static final Uri URI_MONTHLY_INCOMES_PLAN = Uri.parse(URI_SCHEMA + URI_AUTHORITIES + "/" + URI_MONTHLY_INCOMES_PLAN_PATH);
+
     //Total cash flow URI constants:
     public static final String URI_ALL_EXPENSES_PATH = "all_expenses";
     public static final String URI_ALL_INCOMES_PATH = "all_incomes";
@@ -93,5 +105,5 @@ public class Prefs {
 
     //Loader Constants
     public static final int ID_LOADER_EXPENSE_NAMES = 1;
-    public static final int ID_LOADER_INCOME_NAMES = 1;
+    public static final int ID_LOADER_INCOME_NAMES = 2;
 }

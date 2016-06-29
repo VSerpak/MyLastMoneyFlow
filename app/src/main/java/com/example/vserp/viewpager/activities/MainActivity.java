@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,8 @@ import com.example.vserp.viewpager.dialogs.AddNewItemDialog;
 import com.example.vserp.viewpager.utils.Prefs;
 
 public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener, ViewPager.OnPageChangeListener {
+        implements View.OnClickListener,
+        ViewPager.OnPageChangeListener{
 
     private MyPagerAdapter mSectionsPagerAdapter;
 
@@ -37,7 +39,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Money Flow");
+        if (toolbar != null) {
+            toolbar.setTitle("Money Flow");
+        }
         //Without support it will not change the title
         setSupportActionBar(toolbar);
 
@@ -50,15 +54,21 @@ public class MainActivity extends AppCompatActivity
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
+        if (mViewPager != null) {
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.addOnPageChangeListener(this);
+        }
 
         //assign tab titles
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDashBoard);
-        tabLayout.setupWithViewPager(mViewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(mViewPager);
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
+        if (fab != null) {
+            fab.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.menu_item_user_profile:
-//                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.menu_item_list_expenses:
                 startActivity(intentItems);
@@ -188,6 +198,8 @@ public class MainActivity extends AppCompatActivity
                         logCursor(c1);
                         c1 = getContentResolver().query(Prefs.URI_INCOMES, null, null, null, null);
                         logCursor(c1);
+                        c1 = getContentResolver().query(Prefs.URI_CASH_FLOW_MONTHLY, null, null, null, null);
+                        logCursor(c1);
 
                         c1.close();
                         break;
@@ -207,7 +219,7 @@ public class MainActivity extends AppCompatActivity
                     Log.d(Prefs.LOG_TAG, str);
                 } while (c.moveToNext());
             } else
-                Log.d(Prefs.LOG_TAG, "Cursor is null");
+                Log.d(Prefs.LOG_TAG, "Cursor is null - " + c.getNotificationUri());
         }
     }
 
@@ -215,6 +227,7 @@ public class MainActivity extends AppCompatActivity
     public void onPageScrollStateChanged(int state) {
 
     }
+
 
 
 /*      Everything was moved to MyPagerAdapter

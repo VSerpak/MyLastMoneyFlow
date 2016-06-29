@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">ViewPager</string>
+    <string name="app_name">_Money Flow</string>
     <string name="action_settings">Settings</string>
+    <string name="view_username_string">View User Name</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_cash_flow">CashFlow</string>
     <string name="title_expenses">Expenses</string>

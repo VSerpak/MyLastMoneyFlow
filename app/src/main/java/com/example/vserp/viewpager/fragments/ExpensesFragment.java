@@ -2,24 +2,18 @@ package com.example.vserp.viewpager.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,21 +30,14 @@ import com.example.vserp.viewpager.views.RoundChart;
  * Created by vserp on 6/16/2016.
  */
 
-public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ExpensesFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private int TAB_POSITION;
     private String CASH_FLOW_MONTHLY_FIELD_ITEM;
     private String CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN;
     private String CURRENT_MONTH_ITEM;
     private String NEXT_MONTH_ITEM_PLAN;
     private String LAST_MONTH_ITEM;
-
-    private String LAST_MONTH_EXPENSE = "last_month_expense";
-    private String LAST_MONTH_INCOME = "last_month_income";
-    private String CURRENT_MONTH_EXPENSE = "current_month_expense";
-    private String CURRENT_MONTH_INCOME = "current_month_income";
-    private String NEXT_MONTH_EXPENSE_PLAN = "next_month_expense_plan";
-    private String NEXT_MONTH_INCOME_PLAN = "next_month_income_plan";
 
     private TextView tvLastMonth;
     private TextView tvCurrentMonth;
@@ -65,7 +52,7 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setFragmentInfo(MyPagerAdapter.FRAGMENT_INCOMES);
+        ((MainActivity) getActivity()).setFragmentInfo(MyPagerAdapter.FRAGMENT_EXPENSES);
 
         final View view = inflater.inflate(R.layout.fragment_cash_flow, container, false);
 
@@ -79,9 +66,9 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         if (event.getAction() == KeyEvent.ACTION_DOWN &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            // сохраняем текст, введенный до нажатия Enter в переменную
+                            // save text after pushing the button Enter:
                             sPlan = etPlanNextMonth.getText().toString();
-                            MyIntentService.startActionAddIncomePlan(getActivity(), sPlan);
+                            MyIntentService.startActionAddExpensePlan(getActivity(), sPlan);
 
                             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -91,7 +78,8 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
                     }
                 }
         );
-/*        etPlanNextMonth.addTextChangedListener(new TextWatcher() {
+
+ /*       etPlanNextMonth.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -107,12 +95,12 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
             @Override
             public void afterTextChanged(Editable s) {
 
-                    sPlan = etPlanNextMonth.getText().toString();
-                        MyIntentService.startActionAddIncomePlan(getActivity(), sPlan);
+                sPlan = etPlanNextMonth.getText().toString();
+                        MyIntentService.startActionAddExpensePlan(getActivity(), sPlan);
             }
-        });*/
-
-        getActivity().getSupportLoaderManager().initLoader(Prefs.ID_LOADER_INCOME_NAMES, null, this);
+        });
+*/
+        getActivity().getSupportLoaderManager().initLoader(Prefs.ID_LOADER_EXPENSE_NAMES, null, this);
 
         return view;
     }
@@ -121,6 +109,7 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), Prefs.URI_CASH_FLOW_MONTHLY, null, null, null, null);
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -155,7 +144,12 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
-
+/*    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+        if (takeContentChanged())
+            forceLoad();
+    }*/
     private void drawDiagram() {
 
         int percentOfPlan;
@@ -177,18 +171,17 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void naming(int position) {
+
         if (position == MyPagerAdapter.FRAGMENT_EXPENSES) {
-            TAB_POSITION = MainActivity.sTabPosition;
-            NEXT_MONTH_ITEM_PLAN = NEXT_MONTH_EXPENSE_PLAN;
-            CURRENT_MONTH_ITEM = CURRENT_MONTH_EXPENSE;
-            LAST_MONTH_ITEM = LAST_MONTH_EXPENSE;
+            NEXT_MONTH_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN;
+            CURRENT_MONTH_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE;
+            LAST_MONTH_ITEM = Prefs.LAST_MONTH_EXPENSE;
             CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN;
             CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE;
         } else {
-            TAB_POSITION = MainActivity.sTabPosition;
-            NEXT_MONTH_ITEM_PLAN = NEXT_MONTH_INCOME_PLAN;
-            CURRENT_MONTH_ITEM = CURRENT_MONTH_INCOME;
-            LAST_MONTH_ITEM = LAST_MONTH_INCOME;
+            NEXT_MONTH_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN;
+            CURRENT_MONTH_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME;
+            LAST_MONTH_ITEM = Prefs.LAST_MONTH_INCOME;
             CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN;
             CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME;
         }

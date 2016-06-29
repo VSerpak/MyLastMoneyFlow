@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="15000"
+            android:hint="0"
             android:paddingTop="150dp"
             android:textSize="20sp" />
 
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="top"
-            android:hint="25000"
+            android:hint="0"
             android:paddingTop="150dp"
             android:textSize="35sp"
             android:paddingLeft="10dp" />

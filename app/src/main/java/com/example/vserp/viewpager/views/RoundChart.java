@@ -67,22 +67,19 @@ public class RoundChart extends View {
         setMeasuredDimension(mDiameter*2,mDiameter*2);
     }
 
-    public void setValues (int anglePercent){
+    public void setValues (int percentOfPlan){
 
-        float mCurrent = 1;
-
-        if (mCurrent < 100) {
+        if (percentOfPlan <= 100) {
+            this.mAnglePercent = percentOfPlan;
             mColorPlan = getResources().getColor(R.color.lightGreen);
             mColorCurrent = getResources().getColor(R.color.darkGreen);
+            mAngleValue = (float) mAnglePercent *3.6f;
         }else{
+            this.mAnglePercent = percentOfPlan;
             mColorPlan = getResources().getColor(R.color.lightRed);
             mColorCurrent = getResources().getColor(R.color.darkRed);
+            mAngleValue = (float) (mAnglePercent - 100) *3.6f;
         }
-
-        this.mAnglePercent = anglePercent;
-
-        mAngleValue = (float) mAnglePercent *3.6f;
-
         draw(new Canvas());
     }
 }

@@ -28,6 +28,7 @@ public class MyContentProvider extends ContentProvider {
     private static final int URI_RAW_QUERY_ALL_INCOMES_CODE = 6;
 
     private static final int URI_CASH_FLOW_MONTHLY_CODE = 7;
+    private static final int URI_CASH_FLOW_MONTHLY_EXPENSES_PLAN_CODE = 8;
 
     static {
         uriMatcher.addURI(Prefs.URI_AUTHORITIES, Prefs.URI_EXPENSES_PATH, URI_EXPENSES_CODE);
@@ -115,8 +116,8 @@ public class MyContentProvider extends ContentProvider {
                         selectionArgs, sortOrder);
                 break;
             case URI_CASH_FLOW_MONTHLY_CODE:
-                cursor = queryCursorBuilder(Prefs.TABLE_CASH_FLOW_MONTHLY_NAME,projection,selection,
-                        selectionArgs,sortOrder);
+                cursor = queryCursorBuilder(Prefs.TABLE_CASH_FLOW_MONTHLY_NAME, projection, selection,
+                        selectionArgs, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Non support URI");
@@ -140,10 +141,10 @@ public class MyContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case URI_EXPENSES_CODE:
-                updateId = database.update(Prefs.TABLE_NAME_EXPENSES, values, selection,selectionArgs);
+                updateId = database.update(Prefs.TABLE_NAME_EXPENSES, values, selection, selectionArgs);
                 break;
             case URI_EXPENSE_NAMES_CODE:
-                updateId = database.update(Prefs.TABLE_NAME_EXPENSE_NAMES, values, selection,selectionArgs);
+                updateId = database.update(Prefs.TABLE_NAME_EXPENSE_NAMES, values, selection, selectionArgs);
                 break;
             case URI_INCOMES_CODE:
                 updateId = database.update(Prefs.TABLE_NAME_INCOMES, values, selection, selectionArgs);
@@ -152,7 +153,7 @@ public class MyContentProvider extends ContentProvider {
                 updateId = database.update(Prefs.TABLE_NAME_INCOME_NAMES, values, selection, selectionArgs);
                 break;
             case URI_CASH_FLOW_MONTHLY_CODE:
-                updateId = database.update(Prefs.TABLE_CASH_FLOW_MONTHLY_NAME,values,selection,selectionArgs);
+                updateId = database.update(Prefs.TABLE_CASH_FLOW_MONTHLY_NAME, values, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
@@ -195,8 +196,5 @@ public class MyContentProvider extends ContentProvider {
     public String getType(Uri uri) {
 
         return uri.getAuthority();
-//        throw new UnsupportedOperationException("Not yet implemented");
-
     }
-
 }
