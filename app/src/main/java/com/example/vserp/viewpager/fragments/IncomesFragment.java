@@ -36,30 +36,20 @@ import com.example.vserp.viewpager.views.RoundChart;
  * Created by vserp on 6/16/2016.
  */
 
-public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class IncomesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private int TAB_POSITION;
-    private String CASH_FLOW_MONTHLY_FIELD_ITEM;
-    private String CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN;
     private String CURRENT_MONTH_ITEM;
     private String NEXT_MONTH_ITEM_PLAN;
     private String LAST_MONTH_ITEM;
-
-    private String LAST_MONTH_EXPENSE = "last_month_expense";
-    private String LAST_MONTH_INCOME = "last_month_income";
-    private String CURRENT_MONTH_EXPENSE = "current_month_expense";
-    private String CURRENT_MONTH_INCOME = "current_month_income";
-    private String NEXT_MONTH_EXPENSE_PLAN = "next_month_expense_plan";
-    private String NEXT_MONTH_INCOME_PLAN = "next_month_income_plan";
 
     private TextView tvLastMonth;
     private TextView tvCurrentMonth;
     private EditText etPlanNextMonth;
 
     public static String sPlan;
-    public static String sCurrentPlan;
 
     private RoundChart rcCashFlow;
+    private boolean isOpened;
 
     @Nullable
     @Override
@@ -91,26 +81,6 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
                     }
                 }
         );
-/*        etPlanNextMonth.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (sPlan != ""){
-                    sPlan = "0";
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                    sPlan = etPlanNextMonth.getText().toString();
-                        MyIntentService.startActionAddIncomePlan(getActivity(), sPlan);
-            }
-        });*/
 
         getActivity().getSupportLoaderManager().initLoader(Prefs.ID_LOADER_INCOME_NAMES, null, this);
 
@@ -125,28 +95,26 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        naming(MainActivity.sTabPosition);
-
         if (data != null) {
 
-            data.moveToFirst();
+            data.moveToLast();
 
             if (data.getCount() != 0) {
 
                 NEXT_MONTH_ITEM_PLAN = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN)));
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN)));
                 CURRENT_MONTH_ITEM = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM)));
-
-                //TODO selection of previous expenses and incomes
-
-                LAST_MONTH_ITEM = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM)));
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME)));
             } else {
                 NEXT_MONTH_ITEM_PLAN = "0";
                 CURRENT_MONTH_ITEM = "0";
                 LAST_MONTH_ITEM = "0";
             }
+
+            data.moveToPrevious();
+
+            LAST_MONTH_ITEM = String.valueOf(data.getInt(data
+                    .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME)));
         }
         drawDiagram();
     }
@@ -173,24 +141,6 @@ public class CashFlowFragment extends Fragment implements LoaderManager.LoaderCa
             }
             rcCashFlow.setValues(percentOfPlan);
             rcCashFlow.invalidate();
-        }
-    }
-
-    private void naming(int position) {
-        if (position == MyPagerAdapter.FRAGMENT_EXPENSES) {
-            TAB_POSITION = MainActivity.sTabPosition;
-            NEXT_MONTH_ITEM_PLAN = NEXT_MONTH_EXPENSE_PLAN;
-            CURRENT_MONTH_ITEM = CURRENT_MONTH_EXPENSE;
-            LAST_MONTH_ITEM = LAST_MONTH_EXPENSE;
-            CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN;
-            CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE;
-        } else {
-            TAB_POSITION = MainActivity.sTabPosition;
-            NEXT_MONTH_ITEM_PLAN = NEXT_MONTH_INCOME_PLAN;
-            CURRENT_MONTH_ITEM = CURRENT_MONTH_INCOME;
-            LAST_MONTH_ITEM = LAST_MONTH_INCOME;
-            CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN;
-            CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME;
         }
     }
 }

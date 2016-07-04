@@ -7,7 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.vserp.viewpager.activities.MainActivity;
-import com.example.vserp.viewpager.fragments.CashFlowFragment;
+import com.example.vserp.viewpager.fragments.IncomesFragment;
 import com.example.vserp.viewpager.fragments.ExpensesFragment;
 import com.example.vserp.viewpager.utils.Prefs;
 
@@ -147,7 +147,7 @@ public class MyIntentService extends IntentService {
     private void handleActionAddIncomePlan(String itemPlan) {
 
         int mCurrentIncomePlan;
-        int mNewIncomePlanValue = Integer.parseInt(CashFlowFragment.sPlan);
+        int mNewIncomePlanValue = Integer.parseInt(IncomesFragment.sPlan);
 
         Calendar mCalendar = Calendar.getInstance();
 

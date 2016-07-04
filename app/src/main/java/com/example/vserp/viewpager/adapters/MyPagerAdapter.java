@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.vserp.viewpager.fragments.CashFlowFragment;
+import com.example.vserp.viewpager.fragments.IncomesFragment;
 import com.example.vserp.viewpager.R;
 import com.example.vserp.viewpager.fragments.ExpensesFragment;
 
@@ -46,22 +46,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 defaultFragment.setArguments(argBundle);
                 return defaultFragment;
             case FRAGMENT_EXPENSES:
-/*
-                defaultFragment = new DefaultFragment();
-                argBundle = new Bundle();
-                argBundle.putString(DefaultFragment.KEY_NAME, context.getResources().getString(R.string.title_expenses));
-                defaultFragment.setArguments(argBundle);
-*/
                 return new ExpensesFragment();
             case FRAGMENT_INCOMES:
-/*
-                defaultFragment = new DefaultFragment();
-                argBundle = new Bundle();
-                argBundle.putString(DefaultFragment.KEY_NAME, context.getResources().getString(R.string.title_incomes));
-                defaultFragment.setArguments(argBundle);
-*/
-
-                return new CashFlowFragment();
+                return new IncomesFragment();
         }
         return null;
     }

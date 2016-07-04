@@ -39,11 +39,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
             toolbar.setTitle("Money Flow");
-        }
         //Without support it will not change the title
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -131,10 +129,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        Log.d("myLogs", String.valueOf(position));
-    }
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
     @Override
     public void onPageSelected(int position) {
@@ -173,7 +168,6 @@ public class MainActivity extends AppCompatActivity
                 switch (sTabPosition) {
                     case MyPagerAdapter.FRAGMENT_EXPENSES:
                         addNewItemDialog.show(getSupportFragmentManager(), "addItem");
-                        Toast.makeText(this, "Expenses", Toast.LENGTH_SHORT).show();
                         Cursor c;
 
                         Log.d(Prefs.LOG_TAG, "--- EXPENSES_NAMES Table ---");
@@ -188,7 +182,6 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case MyPagerAdapter.FRAGMENT_INCOMES:
                         addNewItemDialog.show(getSupportFragmentManager(), "addItem");
-                        Toast.makeText(this, "Incomes", Toast.LENGTH_SHORT).show();
 
                         Cursor c1;
 
@@ -214,7 +207,7 @@ public class MainActivity extends AppCompatActivity
                 do {
                     str = "";
                     for (String cn : c.getColumnNames()) {
-                        str = str.concat(cn + " = " + c.getString(c.getColumnIndex(cn)) + "; ");
+                        str = str.concat("\n" + cn + " = " + c.getString(c.getColumnIndex(cn)) + "; ");
                     }
                     Log.d(Prefs.LOG_TAG, str);
                 } while (c.moveToNext());

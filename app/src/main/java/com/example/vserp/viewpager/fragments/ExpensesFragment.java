@@ -114,28 +114,26 @@ public class ExpensesFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        naming(MainActivity.sTabPosition);
-
         if (data != null) {
 
-            data.moveToFirst();
+            data.moveToLast();
 
             if (data.getCount() != 0) {
 
                 NEXT_MONTH_ITEM_PLAN = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN)));
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN)));
                 CURRENT_MONTH_ITEM = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM)));
-
-                //TODO selection of previous expenses and incomes
-
-                LAST_MONTH_ITEM = String.valueOf(data.getInt(data
-                        .getColumnIndex(CASH_FLOW_MONTHLY_FIELD_ITEM)));
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE)));
             } else {
                 NEXT_MONTH_ITEM_PLAN = "0";
                 CURRENT_MONTH_ITEM = "0";
                 LAST_MONTH_ITEM = "0";
             }
+
+            data.moveToPrevious();
+
+            LAST_MONTH_ITEM = String.valueOf(data.getInt(data
+                    .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE)));
         }
         drawDiagram();
     }
@@ -170,20 +168,4 @@ public class ExpensesFragment extends Fragment
         }
     }
 
-    private void naming(int position) {
-
-        if (position == MyPagerAdapter.FRAGMENT_EXPENSES) {
-            NEXT_MONTH_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN;
-            CURRENT_MONTH_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE;
-            LAST_MONTH_ITEM = Prefs.LAST_MONTH_EXPENSE;
-            CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE_PLAN;
-            CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE;
-        } else {
-            NEXT_MONTH_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN;
-            CURRENT_MONTH_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME;
-            LAST_MONTH_ITEM = Prefs.LAST_MONTH_INCOME;
-            CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME_PLAN;
-            CASH_FLOW_MONTHLY_FIELD_ITEM = Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME;
-        }
-    }
 }

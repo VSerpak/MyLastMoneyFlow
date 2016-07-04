@@ -58,12 +58,14 @@ public class MyContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case URI_EXPENSES_CODE:
+                //TODO метод принимает uri, value и делать observer
                 uri = insertUri(uri, Prefs.TABLE_NAME_EXPENSES, values);
                 break;
             case URI_EXPENSE_NAMES_CODE:
                 uri = insertUri(uri, Prefs.TABLE_NAME_EXPENSE_NAMES, values);
                 break;
             case URI_INCOMES_CODE:
+                //TODO метод принимает uri, value и делать observer
                 uri = insertUri(uri, Prefs.TABLE_NAME_INCOMES, values);
                 break;
             case URI_INCOME_NAMES_CODE:
@@ -74,6 +76,7 @@ public class MyContentProvider extends ContentProvider {
                 break;
         }
         getContext().getContentResolver().notifyChange(uri, null);
+
         database.close();
         return uri;
     }
