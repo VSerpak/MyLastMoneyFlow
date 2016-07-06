@@ -35,18 +35,18 @@ public class ExpensesFragment extends Fragment
 
     private String CASH_FLOW_MONTHLY_FIELD_ITEM;
     private String CASH_FLOW_MONTHLY_FIELD_ITEM_PLAN;
-    private String CURRENT_MONTH_ITEM;
-    private String NEXT_MONTH_ITEM_PLAN;
-    private String LAST_MONTH_ITEM;
+    private static String CURRENT_MONTH_ITEM;
+    private static String NEXT_MONTH_ITEM_PLAN;
+    private static String LAST_MONTH_ITEM;
 
-    private TextView tvLastMonth;
-    private TextView tvCurrentMonth;
-    private EditText etPlanNextMonth;
+    private static TextView tvLastMonth;
+    private static TextView tvCurrentMonth;
+    private static EditText etPlanNextMonth;
 
     public static String sPlan;
     public static String sCurrentPlan;
 
-    private RoundChart rcCashFlow;
+    private static RoundChart rcCashFlow;
 
     @Nullable
     @Override
@@ -131,9 +131,12 @@ public class ExpensesFragment extends Fragment
             }
 
             data.moveToPrevious();
-
-            LAST_MONTH_ITEM = String.valueOf(data.getInt(data
-                    .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE)));
+            try {
+                LAST_MONTH_ITEM = String.valueOf(data.getInt(data
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_EXPENSE)));
+            }catch (android.database.CursorIndexOutOfBoundsException e){
+                LAST_MONTH_ITEM = "0";
+            }
         }
         drawDiagram();
     }
@@ -148,7 +151,7 @@ public class ExpensesFragment extends Fragment
         if (takeContentChanged())
             forceLoad();
     }*/
-    private void drawDiagram() {
+    private static void drawDiagram() {
 
         int percentOfPlan;
 

@@ -38,24 +38,24 @@ import com.example.vserp.viewpager.views.RoundChart;
 
 public class IncomesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private String CURRENT_MONTH_ITEM;
-    private String NEXT_MONTH_ITEM_PLAN;
-    private String LAST_MONTH_ITEM;
+    private static String CURRENT_MONTH_ITEM;
+    private static String NEXT_MONTH_ITEM_PLAN;
+    private static String LAST_MONTH_ITEM;
 
-    private TextView tvLastMonth;
-    private TextView tvCurrentMonth;
-    private EditText etPlanNextMonth;
+    private static TextView tvLastMonth;
+    private static TextView tvCurrentMonth;
+    private static EditText etPlanNextMonth;
 
     public static String sPlan;
 
-    private RoundChart rcCashFlow;
+    private static RoundChart rcCashFlow;
     private boolean isOpened;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setFragmentInfo(MyPagerAdapter.FRAGMENT_INCOMES);
+        ((MainActivity) getActivity()).setFragmentInfo(MyPagerAdapter.FRAGMENT_INCOMES);
 
         final View view = inflater.inflate(R.layout.fragment_cash_flow, container, false);
 
@@ -73,7 +73,7 @@ public class IncomesFragment extends Fragment implements LoaderManager.LoaderCal
                             sPlan = etPlanNextMonth.getText().toString();
                             MyIntentService.startActionAddIncomePlan(getActivity(), sPlan);
 
-                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             return true;
                         }
@@ -112,9 +112,12 @@ public class IncomesFragment extends Fragment implements LoaderManager.LoaderCal
             }
 
             data.moveToPrevious();
-
-            LAST_MONTH_ITEM = String.valueOf(data.getInt(data
-                    .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME)));
+            try {
+                LAST_MONTH_ITEM = String.valueOf(data.getInt(data
+                        .getColumnIndex(Prefs.CASH_FLOW_MONTHLY_FIELD_INCOME)));
+            }catch (android.database.CursorIndexOutOfBoundsException e){
+                LAST_MONTH_ITEM = "0";
+            }
         }
         drawDiagram();
     }
@@ -124,7 +127,7 @@ public class IncomesFragment extends Fragment implements LoaderManager.LoaderCal
 
     }
 
-    private void drawDiagram() {
+    public static void drawDiagram() {
 
         int percentOfPlan;
 

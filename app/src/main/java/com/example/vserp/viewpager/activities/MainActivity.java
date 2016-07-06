@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         switch (position) {
             case MyPagerAdapter.FRAGMENT_CASH_FLOW:
                 toolbar.setTitle(R.string.title_cash_flow);
+
                 break;
             case MyPagerAdapter.FRAGMENT_EXPENSES:
                 toolbar.setTitle(R.string.title_expenses);
